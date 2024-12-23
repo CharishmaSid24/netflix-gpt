@@ -11,6 +11,11 @@
 -firebase setup
 -Deploying our app to production
 -Create sign up user account
+-implement sign in user Api
+-created redux store with userslice
+-implemented Sign Out
+-update profile
+-fetch from TMDB
 
 # Features
 -Login / signup page
