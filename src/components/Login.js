@@ -1,25 +1,27 @@
 import { useRef, useState } from "react";
 import Header from "./Header.js";
 import { checkValiddata } from "../utils/validate.js";
-import { updateProfile ,
+import {
+  updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../utils/firebase.js";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice.js";
+import { USER_AVTHAR } from "../utils/constants.js";
+
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
 
   const handleButtonClick = () => {
     if (!isSignInForm) {
+      // Sign-up logic
       const message = checkValiddata(
         email.current.value,
         password.current.value,
@@ -28,72 +30,68 @@ const Login = () => {
       setErrorMessage(message);
 
       if (message) return;
-      //sign up Logic
+
+      // Sign up using Firebase
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value,
-        name.current.value
+        password.current.value
       )
         .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
+          // Update profile after successful sign-up
           updateProfile(auth.currentUser, {
-            displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
-          }).then(() => {
-            const {uid,email,displayName,photoURL} =auth.currentUser;
-            dispatch(
-              addUser({
-                uid : uid,
-                email : email,
-                displayName : displayName,
-                photoURL : photoURL,
-              })
-            )
-            navigate("/browse");
-          }).catch((error) => {
-            setErrorMessage(error.message);
-          });
-          console.log(user);
-          navigate("/browse");
+            displayName: name.current.value,
+            photoURL: USER_AVTHAR,
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+            })
+            .catch((error) => {
+              setErrorMessage(error.message);
+            });
+          console.log(userCredential.user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          setErrorMessage(errorCode + " - " + errorMessage);
         });
     } else {
-      const message = checkValiddata(
-        email.current.value,
-        password.current.value,
-        null,
-        true
-      );
+      // Sign-in logic
+      const message = checkValiddata(email.current.value, password.current.value);
       setErrorMessage(message);
 
       if (message) return;
-      //sign in logic
+
+      // Sign in using Firebase
       signInWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value
       )
         .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
+          console.log(userCredential.user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setErrorMessage(errorCode + "-" + errorMessage);
+          setErrorMessage(errorCode + " - " + errorMessage);
         });
     }
   };
+
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
   };
+
   return (
     <div>
       <Header />
@@ -126,7 +124,7 @@ const Login = () => {
         />
         <input
           ref={password}
-          type="text"
+          type="password"  
           placeholder="Password"
           className="p-2 my-2 w-full bg-gray-800 rounded-lg"
         />
@@ -139,8 +137,8 @@ const Login = () => {
         </button>
         <p className="py-2 cursor-pointer" onClick={toggleSignInForm}>
           {isSignInForm
-            ? "New to Netflix ? Sign Up Now"
-            : "Already Registered ? Sign In Now"}
+            ? "New to Netflix? Sign Up Now"
+            : "Already Registered? Sign In Now"}
         </p>
       </form>
     </div>
