@@ -57,7 +57,7 @@ const Login = () => {
             .catch((error) => {
               setErrorMessage(error.message);
             });
-          console.log(userCredential.user);
+
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -78,7 +78,7 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          console.log(userCredential.user);
+          
         })
         .catch((error) => {
           const errorCode = error.code;
