@@ -20,7 +20,21 @@
 -Unsubscribed to the unAuthstagechanged callback
 -Registered for TMDB API & create an app & get access token
 -Get Data from TMDB now playing movies list API
--
+-Custom hook for nowplaying movies
+-update store with movie data
+create movieslice
+-planning for main & Secondary container
+-fetch data for trailer video
+-update store with trailer video data
+-emdeded the youtube video & make it autoplay n mute
+-tailwind classes to make it look awesome
+-Build Secondary component
+-Build Movie List
+-Build Movie card
+-TMDB Image CDN
+-MADE The brose page amazing with Tailwind css
+-usePopularMovies Hook
+
 
 # Features
 -Login / signup page

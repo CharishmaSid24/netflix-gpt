@@ -57,7 +57,6 @@ const Login = () => {
             .catch((error) => {
               setErrorMessage(error.message);
             });
-
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -66,7 +65,10 @@ const Login = () => {
         });
     } else {
       // Sign-in logic
-      const message = checkValiddata(email.current.value, password.current.value);
+      const message = checkValiddata(
+        email.current.value,
+        password.current.value
+      );
       setErrorMessage(message);
 
       if (message) return;
@@ -77,9 +79,7 @@ const Login = () => {
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
-          
-        })
+        .then((userCredential) => {})
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -93,10 +93,13 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="overflow-y-hidden">
+      {" "}
+      {/* Add this line to hide the scrollbar */}
       <Header />
       <div className="absolute">
         <img
+          className="h-[100vh] w-[100vw] object-cover"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/150c4b42-11f6-4576-a00f-c631308b1e43/web/IN-en-20241216-TRIFECTA-perspective_915a9055-68ad-4e81-b19a-442f1cd134dc_large.jpg"
           alt="logo"
         />
@@ -124,7 +127,7 @@ const Login = () => {
         />
         <input
           ref={password}
-          type="password"  
+          type="password"
           placeholder="Password"
           className="p-2 my-2 w-full bg-gray-800 rounded-lg"
         />
