@@ -33,7 +33,10 @@ create movieslice
 -Build Movie card
 -TMDB Image CDN
 -MADE The brose page amazing with Tailwind css
--usePopularMovies Hook
+-usePopularMovies custom Hook
+-GPT Search
+
+
 
 
 # Features
