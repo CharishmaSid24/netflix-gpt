@@ -34,7 +34,11 @@ create movieslice
 -TMDB Image CDN
 -MADE The brose page amazing with Tailwind css
 -usePopularMovies custom Hook
--GPT Search
+-GPT Search Page
+-GPT Search Bar
+-Multi-language feature in app
+-Integrate 
+
 
 
 
